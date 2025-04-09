@@ -1,18 +1,14 @@
 <?php
 
-namespace App\Filament\Widgets;
+namespace App\Filament\Resources\SurveyResource\Widgets;
 
 use App\Models\Survey;
 use App\Models\Response;
 use Filament\Widgets\StatsOverviewWidget\Stat;
 use Filament\Widgets\StatsOverviewWidget as BaseWidget;
 
-class StatsOverview extends BaseWidget
+class SurveyStatistics extends BaseWidget
 {
-    protected static ?int $sort = 1;
-
-    protected static bool $isLazy = false;
-    
     protected function getStats(): array
     {
         return [
@@ -26,7 +22,7 @@ class StatsOverview extends BaseWidget
 
             Stat::make('Total Responses', Response::count())
             ->color('info')
-            ->descriptionIcon('heroicon-m-chat-bubble-left-right'),
+            ->descriptionIcon('heroicon-m-chat-bubble-left-right')
         ];
     }
 }

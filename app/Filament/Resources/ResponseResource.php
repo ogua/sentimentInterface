@@ -44,17 +44,21 @@ class ResponseResource extends Resource
     public static function table(Table $table): Table
     {
         return $table
+            ->recordUrl('')
             ->columns([
                 Tables\Columns\TextColumn::make('survey.title')
                 ->label('Survey')
-                    ->searchable(),
+                ->badge()
+                ->searchable(),
                 Tables\Columns\TextColumn::make('user.name')
                     ->searchable()
-                    ->badge(),
+                    ->badge()
+                    ->color('success'),
                 Tables\Columns\TextColumn::make('submitted_at')
                     ->dateTime()
                     ->sortable(),
                 Tables\Columns\TextColumn::make('location')
+                    ->label('IP Address')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('device_info')
                     ->searchable(),

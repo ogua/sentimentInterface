@@ -12,6 +12,7 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 use App\Filament\Resources\SentimentAnalysisResource\Pages;
 use App\Filament\Resources\SentimentAnalysisResource\RelationManagers;
+use App\Filament\Resources\SentimentAnalysisResource\Widgets\SentimentGraph;
 
 class SentimentAnalysisResource extends Resource
 {
@@ -50,6 +51,7 @@ class SentimentAnalysisResource extends Resource
     public static function table(Table $table): Table
     {
         return $table
+            ->recordUrl('')
             ->columns([
                 Tables\Columns\TextColumn::make('responseAnswer.surveyQuestion.question_text')
                     ->label('Question')
@@ -88,6 +90,13 @@ class SentimentAnalysisResource extends Resource
     {
         return [
             //
+        ];
+    }
+
+    public static function getWidgets(): array
+    {
+        return [
+            SentimentGraph::class
         ];
     }
 

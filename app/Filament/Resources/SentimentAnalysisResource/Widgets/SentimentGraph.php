@@ -1,15 +1,13 @@
 <?php
 
-namespace App\Filament\Widgets;
+namespace App\Filament\Resources\SentimentAnalysisResource\Widgets;
 
-use App\Models\Response;
 use App\Models\SentimentAnalysis;
 use Filament\Widgets\ChartWidget;
 
-class SentimentDistributionChart extends ChartWidget
+class SentimentGraph extends ChartWidget
 {
-    protected static ?string $heading = 'Sentiment Analyses';
-    protected static ?int $sort = 2;
+    protected static ?string $heading = 'Sentiment Analysis';
 
     protected int | string | array $columnSpan = 'full';
 

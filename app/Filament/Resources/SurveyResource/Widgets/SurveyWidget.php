@@ -1,21 +1,29 @@
 <?php
 
-namespace App\Filament\Widgets;
+namespace App\Filament\Resources\SurveyResource\Widgets;
 
-use App\Models\Response;
 use App\Models\SentimentAnalysis;
 use Filament\Widgets\ChartWidget;
 
-class SentimentDistributionChart extends ChartWidget
+class SurveyWidget extends ChartWidget
 {
-    protected static ?string $heading = 'Sentiment Analyses';
-    protected static ?int $sort = 2;
+    protected static ?string $heading = 'Sentiment Analysis';
 
     protected int | string | array $columnSpan = 'full';
 
+    protected static ?string $maxHeight = '200px';
+
+    public $record;
+
     protected function getData(): array
-    {
-        $data = SentimentAnalysis::select('sentiment_label')
+    {        
+        //response has survey_id
+        //responseAnwser has response_id
+        //sentiment has responseAnswer_id
+        
+        $data = SentimentAnalysis::whereHas('responseAnswer.surveyResponse', function ($query) {
+            $query->where('survey_id', $this->record);
+        })->select('sentiment_label')
             ->selectRaw('COUNT(*) as total')
             ->groupBy('sentiment_label')
             ->pluck('total', 'sentiment_label')

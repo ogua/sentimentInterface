@@ -15,6 +15,8 @@ use App\Filament\Resources\SurveyResource\Pages;
 use Filament\Infolists\Components\RepeatableEntry;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 use App\Filament\Resources\SurveyResource\RelationManagers;
+use App\Filament\Resources\SurveyResource\Widgets\SurveyWidget;
+use App\Filament\Resources\SurveyResource\Widgets\SurveyStatistics;
 
 class SurveyResource extends Resource
 {
@@ -121,6 +123,7 @@ class SurveyResource extends Resource
                 ->icon('heroicon-o-eye')
                 ->color('success')
                 ->slideOver()
+                ->visible(false)
                 ->fillForm(function($record){
                     return [
                         'questions' => $record->questions,
@@ -150,6 +153,12 @@ class SurveyResource extends Resource
 
 
                 ]),
+                Tables\Actions\Action::make("survey")
+                ->label('Survey')
+                ->icon('heroicon-o-chart-bar-square')
+                ->color('danger')
+                ->url(fn($record) => static::getUrl('survey-form',['record' => $record])),
+                Tables\Actions\ViewAction::make(),
                 Tables\Actions\DeleteAction::make(),
             ])
             ->bulkActions([
@@ -166,12 +175,22 @@ class SurveyResource extends Resource
         ];
     }
 
+    public static function getWidgets(): array
+    {
+        return [
+            SurveyStatistics::class,
+            SurveyWidget::class
+        ];
+    }
+
     public static function getPages(): array
     {
         return [
             'index' => Pages\ListSurveys::route('/'),
             'create' => Pages\CreateSurvey::route('/create'),
             'edit' => Pages\EditSurvey::route('/{record}/edit'),
+            'view' => Pages\ViewSurvey::route('/{record}'),
+            'survey-form' => Pages\SurveyForm::route('/{record}/survey-form'),
         ];
     }
 }

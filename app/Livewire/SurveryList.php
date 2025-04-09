@@ -9,6 +9,7 @@ use Filament\Tables\Table;
 use Illuminate\Contracts\View\View;
 use Filament\Forms\Contracts\HasForms;
 use Filament\Tables\Contracts\HasTable;
+use Illuminate\Support\Facades\Redirect;
 use Illuminate\Database\Eloquent\Builder;
 use Filament\Forms\Concerns\InteractsWithForms;
 use Filament\Tables\Concerns\InteractsWithTable;
@@ -38,7 +39,7 @@ class SurveryList extends Component implements HasForms, HasTable
                     ->label('Start Survey')
                     ->icon('heroicon-o-play')
                     ->color('success')
-                    ->action(function() {
+                    ->action(function($record) {
                         //check if user is authenticated
                         if (!auth()->user()) {
                             return redirect()->to('/login');
@@ -46,7 +47,7 @@ class SurveryList extends Component implements HasForms, HasTable
 
                         //if authenticated, redirect to dashboard
                         if (auth()->user()) {
-                            return redirect()->to('/dashboard');
+                            return Redirect()->route('survey.questions.record',['record' => $record->id]);
                         }
                     }),
             ])->filters([

@@ -2,9 +2,10 @@
 
 namespace App\Filament\Resources\SurveyResource\Pages;
 
-use App\Filament\Resources\SurveyResource;
 use Filament\Actions;
 use Filament\Resources\Pages\ListRecords;
+use App\Filament\Resources\SurveyResource;
+use App\Filament\Resources\SurveyResource\Widgets\SurveyStatistics;
 
 class ListSurveys extends ListRecords
 {
@@ -16,4 +17,14 @@ class ListSurveys extends ListRecords
             Actions\CreateAction::make(),
         ];
     }
+
+
+    protected function getHeaderWidgets(): array
+    {
+        return [
+            SurveyStatistics::class
+        ];
+    }
+
+    
 }
