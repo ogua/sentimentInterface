@@ -25,4 +25,9 @@ Route::view('profile', 'profile')
     ->middleware(['auth'])
     ->name('profile');
 
+    Route::get('report-generate/{report_type}/{start_date}/{end_date}',[Webcontroller::class,'report'])
+    ->name('generate.report');
+
+    
+
 require __DIR__.'/auth.php';
